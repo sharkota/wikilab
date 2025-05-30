@@ -4,7 +4,7 @@ import nunjucks from 'nunjucks'
 import * as dotenv from 'dotenv'
 // Module imports
 import './modules/database.ts' // Import database module to initialize connection
-import { db_init } from './modules/database.ts'
+import { db } from './modules/database.ts'
 // Environment configuration
 dotenv.config()
 const { PORT, ORG_NAME, ORG_DESCRIPTION } = process.env
@@ -34,7 +34,7 @@ function server_init() {
 // Server startup
 const init = async () => {
   // Wait for database initialization
-  await db_init()
+  await db.init()
   // Start the server
   server_init()
 };
