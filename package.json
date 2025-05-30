@@ -1,0 +1,32 @@
+{
+  "name": "wikilab",
+  "version": "0.1.0",
+  "description": "wip collaborative documentation solution",
+  "homepage": "https://github.com/sharkota/wikilab#readme",
+  "bugs": {
+    "url": "https://github.com/sharkota/wikilab/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharkota/wikilab.git"
+  },
+  "license": "MIT",
+  "author": "sharkota",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec node src/index.ts",
+    "start": "node src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/nunjucks": "^3.2.6"
+  }
+}
