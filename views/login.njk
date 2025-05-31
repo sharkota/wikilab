@@ -1,0 +1,32 @@
+{% extends "base.njk" %}
+
+{% block content %}
+  <article>
+    {# login form #}
+    <h1>Login</h1>
+    <form method="post" action="/login">
+      <div>
+        <label for="user_name">Username:</label>
+        <input type="text" id="user_name" name="user_name" required="required">
+      </div>
+      <div>
+        <label for="user_pass">Password:</label>
+        <input type="password" id="user_pass" name="user_pass" required="required">
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    {# error message #}
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    {# success message #}
+    {% if success %}
+      <p class="success">{{ success }}</p>
+    {% endif %}
+    {# link to register #}
+    <p>Don't have an account?
+      <a href="/register">Register here</a>.</p>
+  </article>
+{% endblock %}
+{% block title %}Login{% endblock %}

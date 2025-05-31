@@ -40,8 +40,27 @@ export const register = async (user_name: string, user_pass: string, user_email:
   });
 };
 
-//register('admin', 'slop', 'soy@slop.com');
+// Login
+export const login = async (user_name: string, user_pass: string) => {
+  const user = await models.users.findOne({ 'meta.name': user_name });
+  if (!user) {
+    console.log('User not found');
+    return false; // User not found
+  }
+  if (!user.security || !user.security.password) {
+    throw new Error('User security information is missing');
+  }
+  const isPasswordValid = await bcrypt.compare(user_pass, user.security.password);
+  if (!isPasswordValid) {
+    console.error('Invalid password for user:', user_name);
+    return false; // Invalid password
+  }
+  console.log('User logged in successfully:', user_name);
+  return user;
+};
 
 export const db = {
-  init: init
+  init: init,
+  reguster: register,
+  login: login
 };

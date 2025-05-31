@@ -1,0 +1,9 @@
+{% extends "base.njk" %}
+{% block nav %}{% include "nav.njk" %}
+{% endblock %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
