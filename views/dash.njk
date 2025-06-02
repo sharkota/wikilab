@@ -1,0 +1,16 @@
+{% extends "base.njk" %}
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<main>
+    <form>
+        <button type="submit" formaction="/logout" formmethod="post">Logout</button>
+        <button type="submit" formaction="/change-password" formmethod="post">Change Password</button>
+        <button type="submit" formaction="/change-email" formmethod="post">Change Email</button>
+        <button type="submit" formaction="/change-username" formmethod="post">Change Username</button>
+        <button style="color: var(--c3); border-color: var(--c3)" type="submit" formaction="/unregister" formmethod="post" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete Account</button>
+    </form>
+    {% block page_content %}{% endblock %}
+</main>
+{% endblock %}

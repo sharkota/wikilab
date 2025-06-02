@@ -38,6 +38,8 @@ export const register = async (user_name: string, user_pass: string, user_email:
       name: user_name
     }
   });
+  console.log('User registered successfully:', new_user.meta.name);
+  return new_user;
 };
 
 // Login
@@ -50,8 +52,8 @@ export const login = async (user_name: string, user_pass: string) => {
   if (!user.security || !user.security.password) {
     throw new Error('User security information is missing');
   }
-  const isPasswordValid = await bcrypt.compare(user_pass, user.security.password);
-  if (!isPasswordValid) {
+  const is_valid = await bcrypt.compare(user_pass, user.security.password);
+  if (!is_valid) {
     console.error('Invalid password for user:', user_name);
     return false; // Invalid password
   }
@@ -61,6 +63,7 @@ export const login = async (user_name: string, user_pass: string) => {
 
 export const db = {
   init: init,
-  reguster: register,
-  login: login
+  register: register,
+  login: login,
+  models: models
 };
