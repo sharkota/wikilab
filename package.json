@@ -33,6 +33,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.2",
     "@types/express-session": "^1.18.1",
-    "@types/nunjucks": "^3.2.6"
+    "@types/nunjucks": "^3.2.6",
+    "nodemon": "^3.1.10"
   }
 }
