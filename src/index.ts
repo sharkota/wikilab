@@ -9,7 +9,7 @@ import { db } from './modules/database.ts'
 
 // Environment configuration
 dotenv.config()
-const { PORT, ORG_NAME, ORG_DESCRIPTION } = process.env
+const { PORT } = process.env
 
 function server_init() {
   // App setup
@@ -22,23 +22,14 @@ function server_init() {
     watch: true,
   })
   app.set('view engine', 'njk')
-
   // Use refactored middleware
   app.use(session_middleware());
   app.use(static_middleware());
-
   // Body parsers for POST requests
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-
-  // Default to public for assets
-  app.use(express.static('public'))
-  // Given the above, you may create overrides of any path by
-  // creating a corresponding file in the public directory.
-
   // Register routes
   create_routes(app);
-
   // Start the server after all middleware and routes are set up
   app.listen(PORT || 3000, () => {
     console.log(`Server is running on http://localhost:${PORT || 3000}`)

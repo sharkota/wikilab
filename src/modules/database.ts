@@ -8,7 +8,6 @@ export const init = async () => {
     console.error('DB_URI is not defined in the environment variables');
     throw new Error('DB_URI is not defined in the environment variables');
   }
-
   try {
     console.log('Connecting to database...');
     await mongoose.connect(uri);
@@ -23,7 +22,6 @@ export const init = async () => {
 export const models = {
   users: User
 };
-
 // Register
 export const register = async (user_name: string, user_pass: string, user_email: string) => {
   const new_user = await models.users.create({
@@ -41,7 +39,6 @@ export const register = async (user_name: string, user_pass: string, user_email:
   console.log('User registered successfully:', new_user.meta.name);
   return new_user;
 };
-
 // Login
 export const login = async (user_name: string, user_pass: string) => {
   const user = await models.users.findOne({ 'meta.name': user_name });
