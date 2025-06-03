@@ -36,7 +36,7 @@ export function create_routes(app) {
 
     app.get('/dash', (req: express.Request, res: express.Response) => {
         if (!req.session.authenticated) {
-            return res.redirect('/login/#login')
+            return res.redirect('/login/')
         }
         const user = req.session.user;
         res.render('dash', { title: `Dashboard - ${ORG_NAME}`, user: user.meta?.name || 'User' })
@@ -110,6 +110,31 @@ export function create_routes(app) {
         } catch (err) {
             console.error('Unregistration error:', err);
             return res.status(500).send('Error unregistering user');
+        }
+    })
+
+    app.post('/change_password', async (req: express.Request, res: express.Response) => {
+        const { old_password, new_password } = req.body
+        try {
+            if (!old_password || !new_password) {
+                return res.status(400).send('Both old and new passwords are required')
+            }
+            await db.change_password(req.session.user._id, old_password, new_password)
+            req.session.authenticated = false
+            req.session.user = null
+            // Delete session to ensure user is logged out
+            req.session.destroy((err: Error | null) => {
+                if (err) {
+                    console.error('Logout error:', err);
+                    return res.status(500).send('Error logging out');
+                }
+                console.log('User unregistered and logged out successfully');
+                res.redirect('/login/');
+            });
+        }
+        catch (error) {
+            console.error('Change password error:', error)
+            res.status(500).send('An error occurred while changing the password')
         }
     })
 }

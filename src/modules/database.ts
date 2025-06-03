@@ -61,9 +61,32 @@ export const login = async (user_name: string, user_pass: string) => {
   return user;
 };
 
+export const change_password = async (user_id: string, old_password: string, new_password: string) => {
+  const user = await models.users.findById(user_id);
+  if (!user) {
+    console.error('User not found for ID:', user_id);
+    throw new Error('User not found');
+  }
+  if (!user.security || !user.security.password) {
+    console.error('User security information is missing for user ID:', user_id);
+    throw new Error('User security information is missing');
+  }
+  const is_valid = await bcrypt.compare(old_password, user.security.password);
+  if (!is_valid) {
+    console.error('Invalid old password for user ID:', user_id);
+    throw new Error('Invalid old password');
+  } else {
+    user.security.password = await bcrypt.hash(new_password, 10);
+    await user.save();
+    console.log('Password changed successfully for user ID:', user_id);
+    return true; // Password changed successfully
+  }
+}
+
 export const db = {
   init: init,
   register: register,
   login: login,
+  change_password: change_password,
   models: models
 };
