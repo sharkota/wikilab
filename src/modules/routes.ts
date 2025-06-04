@@ -16,7 +16,7 @@ const { ORG_NAME, ORG_DESCRIPTION } = process.env
 export function create_routes(app: any) {
     // GET Routes
     app.get('/', (req: express.Request, res: express.Response) => {
-        res.render('index', { 
+        res.render('main/index', { 
             title: ORG_NAME, 
             content: ORG_DESCRIPTION, 
             user: req.session.user?.meta?.name || 'Sign In' 
@@ -25,17 +25,17 @@ export function create_routes(app: any) {
 
     app.get('/login', (req: express.Request, res: express.Response) => {
         if (req.session.authenticated) return res.redirect('/dash')
-        res.render('login', { title: `Login to ${ORG_NAME}` })
+        res.render('user/login', { title: `Login to ${ORG_NAME}` })
     })
 
     app.get('/register', (req: express.Request, res: express.Response) => {
         if (req.session.authenticated) return res.redirect('/dash')
-        res.render('register', { title: `Register for ${ORG_NAME}` })
+        res.render('user/register', { title: `Register for ${ORG_NAME}` })
     })
 
     app.get('/dash', (req: express.Request, res: express.Response) => {
         if (!req.session.authenticated) return res.redirect('/login/')
-        res.render('dash', { 
+        res.render('user/dash', { 
             title: `Dashboard - ${ORG_NAME}`, 
             user: req.session.user?.meta?.name || 'User' 
         })
